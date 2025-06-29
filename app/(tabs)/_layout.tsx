@@ -2,22 +2,18 @@ import { Tabs } from 'expo-router';
 import React from 'react';
 import { Platform } from 'react-native';
 
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+
+import Fontisto from 'react-native-vector-icons/Fontisto';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: "#007EE3",
         headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
         tabBarStyle: Platform.select({
           ios: {
             // Use a transparent background on iOS to show the blur effect
@@ -25,19 +21,34 @@ export default function TabLayout() {
           },
           default: {},
         }),
+        tabBarPressColor: 'transparent', // disables ripple on Android
       }}>
       <Tabs.Screen
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          tabBarIcon: ({ color }) => <MaterialIcons size={28} name="temple-hindu" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="ringtones"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'ringtones',
+          tabBarIcon: ({ color,focused }) => <Ionicons name={focused ?"musical-notes":"musical-notes-outline"} color={color} size={24} />,
+        }}
+      />
+            <Tabs.Screen
+        name="wallpapers"
+        options={{
+          title: 'wallpapers',
+          tabBarIcon: ({ color,focused }) => <Ionicons name={focused ? "images":"images-outline"} color={color} size={24} />,
+        }}
+      />
+              <Tabs.Screen
+        name="guide"
+        options={{
+          title: 'guide',
+          tabBarIcon: ({ color }) => <Fontisto name="direction-sign" color={color} size={24} />,
         }}
       />
     </Tabs>
