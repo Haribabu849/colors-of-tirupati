@@ -2,9 +2,13 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import * as React from 'react';
 import { useEffect, useRef } from 'react';
-import { Animated, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Animated, ScrollView, StyleSheet, View } from 'react-native';
 import { Button, Text } from 'react-native-paper';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
+
+export const drawer = {
+  label: "Home",
+};
 
 // Fix: add index signature for images object
 type ImagesMap = { [key: string]: any };
@@ -76,13 +80,15 @@ export default function HomeScreen() {
           >
             <Text style={{ color: 'white', textAlign: "center", textTransform: "uppercase", fontWeight: "500", letterSpacing: 1.1 }}>{title}</Text>
           </LinearGradient>
-          <Button onPress={onViewMore}>
-
-          
-          <TouchableOpacity activeOpacity={0.7} style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 8 }} >
-            <Text style={{ textAlign: 'center', fontSize: 16 }}>View More</Text>
+          <Button
+            mode="text"
+            onPress={onViewMore}
+            contentStyle={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+            style={{ marginLeft: 8 }}
+            labelStyle={{ fontSize: 16, textAlign: 'center' }}
+          >
+            <Text style={{ fontSize: 16 }}>View More</Text>
             <EvilIcons name="arrow-right" color="#000" size={22} style={{ marginLeft: 4 }} />
-          </TouchableOpacity>
           </Button>
         </View>
         {chunkArray(items, 3).map((row, rowIdx) => (
@@ -171,3 +177,4 @@ const styles = StyleSheet.create({
     elevation: 8,
   }
 });
+
