@@ -1,12 +1,32 @@
 import { LinearGradient } from 'expo-linear-gradient';
+import { router } from 'expo-router';
 import * as React from 'react';
 import { useEffect, useRef } from 'react';
-import { Animated, ScrollView, StyleSheet, View } from 'react-native';
-import { Avatar, Text } from 'react-native-paper';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Animated, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Button, Text } from 'react-native-paper';
+import EvilIcons from 'react-native-vector-icons/EvilIcons';
+
+// Fix: add index signature for images object
+type ImagesMap = { [key: string]: any };
+const images: ImagesMap = {
+  "darshan-ticket.png": require('@/assets/images/darshan-ticket.png'),
+  "senior-citizen.png": require('@/assets/images/senior-citizen.png'),
+  // add all your images here
+};
+
+let images1 = [
+  { path: "darshan-ticket.png", name: "Special Darshan - 300rs" },
+  { path: "senior-citizen.png", name: "Senior Citizen" },
+  { path: "darshan-ticket.png", name: "Special Darshan Tiruchanur" },
+  
+  { path: "senior-citizen.png", name: "Senior Citizen" },
+  { path: "darshan-ticket.png", name: "Special Darshan Tiruchanur" },
+  { path: "darshan-ticket.png", name: "Special Darshan Tiruchanur" }
+];
 
 export default function HomeScreen() {
   const fadeAnim = useRef(new Animated.Value(0)).current;
+  // const router = useRouter();
 
   useEffect(() => {
     Animated.timing(fadeAnim, {
@@ -16,10 +36,78 @@ export default function HomeScreen() {
     }).start();
   }, [fadeAnim]);
 
+  // Reusable ImageWithLabel component
+  function ImageWithLabel({ source, label }: { source: any; label: string }) {
+    return (
+      <View style={{ width: '32%', alignItems: 'center', marginBottom: 16 }}>
+        <Animated.Image
+          source={source}
+          style={{ width: 60, height: 60, borderRadius: 8, marginBottom: 8 }}
+          resizeMode="cover"
+        />
+        <Text style={{ textAlign: 'center' }}>{label}</Text>
+      </View>
+    );
+  }
+
+  // Reusable SectionWithGrid component
+  function SectionWithGrid({ title, items, images, onViewMore }: {
+    title: string;
+    items: { path: string; name: string }[];
+    images: ImagesMap;
+    onViewMore?: () => void;
+  }) {
+    // Helper to split array into chunks of 3
+    function chunkArray(array: any[], size: number) {
+      const result = [];
+      for (let i = 0; i < array.length; i += size) {
+        result.push(array.slice(i, i + size));
+      }
+      return result;
+    }
+    return (
+      <>
+        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: 16 }}>
+          <LinearGradient
+            colors={['#3FADFB', "#007EE3"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={{ padding: 16, borderRadius: 8, width: "60%", borderColor: "black", borderWidth: 0.8 }} 
+          >
+            <Text style={{ color: 'white', textAlign: "center", textTransform: "uppercase", fontWeight: "500", letterSpacing: 1.1 }}>{title}</Text>
+          </LinearGradient>
+          <Button onPress={onViewMore}>
+
+          
+          <TouchableOpacity activeOpacity={0.7} style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 8 }} >
+            <Text style={{ textAlign: 'center', fontSize: 16 }}>View More</Text>
+            <EvilIcons name="arrow-right" color="#000" size={22} style={{ marginLeft: 4 }} />
+          </TouchableOpacity>
+          </Button>
+        </View>
+        {chunkArray(items, 3).map((row, rowIdx) => (
+          <View
+            key={rowIdx}
+            style={{
+              flexDirection: 'row',
+              justifyContent: row.length === 3 ? 'space-between' : 'flex-start',
+              width: '100%',
+              marginTop: rowIdx === 0 ? 16 : 0,
+              marginBottom: 10,
+            }}
+          >
+            {row.map((item, idx) => (
+              <ImageWithLabel key={idx} source={images[item.path]} label={item.name} />
+            ))}
+          </View>
+        ))}
+      </>
+    );
+  }
+
   return (
-    <SafeAreaView style={styles.container} >
-        <ScrollView contentContainerStyle={{ paddingBottom: 56 }}showsVerticalScrollIndicator={false}>
-      <Text variant="titleLarge" style={styles.title}>Home Page</Text>
+        <ScrollView contentContainerStyle={{ paddingBottom: 0}}showsVerticalScrollIndicator={false}>
+          <View style={styles.container}>
 
       
 
@@ -28,46 +116,23 @@ export default function HomeScreen() {
         source={require('@/assets/images/home-bg.png')}
         style={[styles.image, { opacity: fadeAnim }]}
       />
-<LinearGradient
-  colors={['#3FADFB',"#007EE3"]} start={{ x: 0, y: 0 }}
-  end={{ x: 1, y: 0 }}
-  style={{ padding: 16, borderRadius: 8,width:"60%", margin:"auto", marginTop: 16,borderColor:"black",borderWidth:0.8, }}
->
-  <Text style={{ color: 'white' ,textAlign:"center",textTransform:"uppercase",fontWeight:500, letterSpacing:1.1}}>Types of Darshans</Text>
-</LinearGradient>
-<View style={{display:"flex",justifyContent:"space-between",width:"100%",flexDirection:"row",flexWrap:"wrap",marginTop:16,rowGap:10}}>
 
-
-<Avatar.Text size={80} label="darshan" style={{flexBasis:"45%",backgroundColor:"#007EE3"}} />
-<Avatar.Text size={80} label="XD" style={{flexBasis:"45%",backgroundColor:"#007EE3"}} />
-<Avatar.Text size={80} label="XD"  style={{flexBasis:"45%",backgroundColor:"#007EE3"}}/>
+      {/* Section: Types of Darshans */}
+      <SectionWithGrid title="Types of Darshans" items={images1.slice(0,3)} images={images} onViewMore={() => {
+        console.log("Navigating to Darshans");
+        router.push('/darshans')}} />
+      {/* Section: Types of Sevas */}
+      <SectionWithGrid title="Types of Sevas" items={images1.slice(0,6)} images={images} onViewMore={() => router.push('/darshans')} />
+      <SectionWithGrid title="Accomodation" items={images1.slice(0,2)} images={images} onViewMore={() => router.push('/darshans')} />
+      <SectionWithGrid title="Places" items={images1.slice(0,3)} images={images} onViewMore={() => router.push('/darshans')} />
+      <SectionWithGrid title="Hundi" items={images1.slice(0,2)} images={images} onViewMore={() => router.push('/darshans')} />
 </View>
+<View>
+  <Button onPress={()=>router.push("/darshans")}>go to sevas</Button>
 
-<LinearGradient
-   colors={['#FF9A00',"#FCBD34"]} start={{ x: 0, y: 0 }}
-  end={{ x: 1, y: 0 }}
-  style={{ padding: 16, borderRadius: 8,width:"50%", margin:"auto", marginTop: 16,borderColor:"black",borderWidth:0.8 }}
->
-  <Text style={{ color: 'black' ,textAlign:"center",textTransform:"uppercase"}}>Types of Sevas</Text>
-</LinearGradient>
-<View style={{display:"flex",justifyContent:"space-between",width:"100%",flexDirection:"row",flexWrap:"wrap",marginTop:16,rowGap:10}}>
-
-
-<Avatar.Text size={80} label="XD" style={{flexBasis:"45%"}} />
-<Avatar.Text size={80} label="XD" style={{flexBasis:"45%"}} />
-<Avatar.Text size={80} label="XD"  style={{flexBasis:"45%"}}/>
-<Avatar.Text size={80} label="XD"  style={{flexBasis:"45%"}}/>
-</View>
-<View style={{display:"flex",justifyContent:"space-between",width:"100%",flexDirection:"row",flexWrap:"wrap",marginTop:16,rowGap:10}}>
-
-
-<Avatar.Text size={80} label="XD" style={{flexBasis:"45%"}} />
-<Avatar.Text size={80} label="XD" style={{flexBasis:"45%"}} />
-<Avatar.Text size={80} label="XD"  style={{flexBasis:"45%"}}/>
-<Avatar.Text size={80} label="XD"  style={{flexBasis:"45%"}}/>
 </View>
 </ScrollView>
-    </SafeAreaView>
+
   );
 }
 
@@ -76,7 +141,7 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingRight:16,
     backgroundColor:"white",
-    paddingBottom:0
+    paddingBottom:10
   },
   title: {
     color: 'red',

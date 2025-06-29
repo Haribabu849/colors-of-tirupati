@@ -65,7 +65,6 @@ export default function UploadToCloudinary() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Button title="Pick an Image and Upload" onPress={pickImage} />
         {uploading && <ActivityIndicator size="large" color="blue" style={{ marginTop: 20 }} />}
@@ -76,6 +75,5 @@ export default function UploadToCloudinary() {
           />
         )}
       </View>
-    </SafeAreaView>
   );
 }

@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import { addDoc, collection, Timestamp } from 'firebase/firestore';
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
@@ -11,6 +12,7 @@ export default function UploadNewsForm() {
   });
   const [loading, setLoading] = useState(false);
   const [snack, setSnack] = useState(false);
+  // const router = useRouter();
 
   const handleChange = (field, value) => {
     setForm({ ...form, [field]: value });
@@ -80,6 +82,16 @@ export default function UploadNewsForm() {
       >
         News uploaded successfully!
       </Snackbar>
+      
+      <Button
+        mode="contained"
+        onPress={()=> router.push('/hundi')}
+        loading={loading}
+        disabled={loading}
+        style={styles.button}
+      >
+        Upload News
+      </Button>
     </ScrollView>
   );
 }

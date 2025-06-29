@@ -1,56 +1,85 @@
+import { useNavigation } from '@react-navigation/native';
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { Platform } from 'react-native';
+import { Platform, TouchableOpacity } from 'react-native';
 
-
-import Fontisto from 'react-native-vector-icons/Fontisto';
+import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export default function TabLayout() {
+  const navigation = useNavigation();
 
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: "#007EE3",
-        headerShown: false,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
+      <Tabs
+        screenOptions={{
+          tabBarActiveTintColor: "#007EE3",
+          tabBarInactiveTintColor: "black", // Set inactive tab icon/text color to black
+          headerShown: true,
+          headerTitleAlign: 'center',
+          headerStyle: {
+            backgroundColor: '#007EE3', // Replace with your desired color
           },
-          default: {},
-        }),
-        tabBarPressColor: 'transparent', // disables ripple on Android
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <MaterialIcons size={28} name="temple-hindu" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="ringtones"
-        options={{
-          title: 'ringtones',
-          tabBarIcon: ({ color,focused }) => <Ionicons name={focused ?"musical-notes":"musical-notes-outline"} color={color} size={24} />,
-        }}
-      />
-            <Tabs.Screen
-        name="wallpapers"
-        options={{
-          title: 'wallpapers',
-          tabBarIcon: ({ color,focused }) => <Ionicons name={focused ? "images":"images-outline"} color={color} size={24} />,
-        }}
-      />
-              <Tabs.Screen
-        name="guide"
-        options={{
-          title: 'guide',
-          tabBarIcon: ({ color }) => <Fontisto name="direction-sign" color={color} size={24} />,
-        }}
-      />
-    </Tabs>
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.getParent()?.openDrawer()} style={{ marginLeft: 16 }}>
+              <Ionicons name="menu" size={30} color="black" />
+            </TouchableOpacity>
+          ),
+          tabBarStyle: Platform.select({
+            ios: {
+              // Use a transparent background on iOS to show the blur effect
+              position: 'absolute',
+            },
+            android: {
+              backgroundColor: 'white', // Set your desired color for Android
+            },
+            default: {},
+          }),
+          tabBarButton: (props) => (
+            <TouchableOpacity
+              activeOpacity={1}
+              // Remove android_ripple and only pass supported props
+              onPress={props.onPress}
+              onLongPress={props.onLongPress ?? undefined}
+              style={props.style}
+              accessibilityRole={props.accessibilityRole}
+              accessibilityState={props.accessibilityState}
+              accessibilityLabel={props.accessibilityLabel}
+              testID={props.testID}
+            >
+              {props.children}
+            </TouchableOpacity>
+          ),
+        }}>
+        <Tabs.Screen
+          name="index"
+          options={{
+            title: 'HOME',
+            tabBarIcon: ({ color }) => <MaterialIcons size={28} name="temple-hindu" color={color} />,
+          }}
+        />
+        <Tabs.Screen
+          name="Ringtones"
+          options={{
+            title: 'Ringtones',
+            tabBarIcon: ({ color,focused }) => <Ionicons name={focused ?"musical-notes":"musical-notes-outline"} color={color} size={24} />,
+          }}
+        />
+        <Tabs.Screen
+          name="Places"
+          options={{
+            title: 'Places',
+            tabBarIcon: ({ color }) => <Entypo name="location" color={color} size={24} />,
+          }}
+        />
+        
+        <Tabs.Screen
+          name="Wallpapers"
+          options={{
+            title: 'Wallpapers',
+            tabBarIcon: ({ color,focused }) => <Ionicons name={focused ? "images":"images-outline"} color={color} size={24} />,
+          }}
+        />
+      </Tabs>
   );
 }
