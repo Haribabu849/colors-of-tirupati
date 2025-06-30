@@ -6,9 +6,6 @@ import { Animated, ScrollView, StyleSheet, View } from 'react-native';
 import { Button, Text } from 'react-native-paper';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 
-export const drawer = {
-  label: "Home",
-};
 
 // Fix: add index signature for images object
 type ImagesMap = { [key: string]: any };

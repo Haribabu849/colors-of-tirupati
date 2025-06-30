@@ -1,3 +1,5 @@
+import { DefaultTheme } from 'react-native-paper';
+
 /**
  * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
  * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
@@ -24,3 +26,18 @@ export const Colors = {
     tabIconSelected: tintColorDark,
   },
 };
+
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#007EE3',      // Your primary color
+    accent: '#3FADFB',       // Your accent color
+    background: '#fff',      // Background color
+    surface: '#fff',         // Surface color
+    text: '#000',            // Text color
+    // Add or override more colors as needed
+  },
+};
+
+export const PaperTheme = theme;
