@@ -1,3 +1,4 @@
+import SomeComponent from "@/app/components/SomeComponent";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import * as React from "react";
@@ -23,16 +24,56 @@ const images: ImagesMap = {
 };
 
 let images1 = [
-  { path: "calendar.png", name: "Special Darshan - 300rs" },
-  { path: "senior-citizen.png", name: "Senior Citizen" },
-  { path: "ssd-token.png", name: "Special Darshan Tiruchanur" },
+  {
+    path: "calendar.png",
+    name: "Special Darshan - 300rs",
+    route: "/special-darshan",
+  },
+  {
+    path: "senior-citizen.png",
+    name: "Senior Citizen",
+    route: "/senior-citizen",
+  },
+  {
+    path: "ssd-token.png",
+    name: "Special Darshan Tiruchanur",
+    route: "/ssd-tiruchanur",
+  },
+  { path: "arjitha-seva.png", name: "Arjitha Seva", route: "/arjitha-seva" },
+  { path: "virtual-seva.png", name: "Virtual Seva", route: "/virtual-seva" },
+  {
+    path: "kalyana-mandapam.png",
+    name: "Special Darshan Tiruchanur",
+    route: "/kalyana-mandapam",
+  },
+];
 
-  // { path: "electronic-hundi.png", name: "Senior Citizen" },
-  // { path: "angapradakshanam.png", name: "Special Darshan Tiruchanur" },
-  // { path: "sapthagiri-magazine.png", name: "Special Darshan Tiruchanur" },
-  { path: "arjitha-seva.png", name: "Arjitha Seva" },
-  { path: "virtual-seva.png", name: "Virtual Seva" },
-  { path: "kalyana-mandapam.png", name: "Special Darshan Tiruchanur" },
+const sections = [
+  {
+    title: "Types of Darshans",
+    items: images1.slice(0, 3),
+    route: "/darshans",
+  },
+  {
+    title: "Types of Sevas",
+    items: images1.slice(0, 6),
+    route: "/sevas",
+  },
+  {
+    title: "Accomodation",
+    items: images1.slice(0, 2),
+    route: "/accomodation",
+  },
+  {
+    title: "Places",
+    items: images1.slice(0, 3),
+    route: "/places",
+  },
+  {
+    title: "Hundi",
+    items: images1.slice(0, 2),
+    route: "/hundi",
+  },
 ];
 
 export default function HomeScreen() {
@@ -48,15 +89,73 @@ export default function HomeScreen() {
   }, [fadeAnim]);
 
   // Reusable ImageWithLabel component
-  function ImageWithLabel({ source, label }: { source: any; label: string }) {
+  function ImageWithLabel({
+    source,
+    label,
+    onPress,
+  }: {
+    source: any;
+    label: string;
+    onPress?: () => void;
+  }) {
     return (
-      <View style={{ width: "32%", alignItems: "center", marginBottom: 16 }}>
-        <Animated.Image
-          source={source}
-          style={{ width: 60, height: 60, borderRadius: 8, marginBottom: 8 }}
-          resizeMode="cover"
-        />
-        <Text style={{ textAlign: "center" }}>{label}</Text>
+      <View
+        style={{
+          width: "32%",
+          alignItems: "center",
+          justifyContent: "center",
+          marginBottom: 16,
+          alignSelf: "center",
+        }}
+      >
+        <Button
+          onPress={onPress}
+          style={{
+            padding: 0,
+            minWidth: 0,
+            minHeight: 0,
+            borderRadius: 8,
+            overflow: "hidden",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          contentStyle={{
+            width: 60,
+            height: 60,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Animated.View
+            style={{
+              width: 60,
+              height: 60,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Animated.Image
+              source={source}
+              style={{
+                width: 60,
+                height: 60,
+                borderRadius: 8,
+                marginBottom: 0,
+              }}
+              resizeMode="cover"
+            />
+          </Animated.View>
+        </Button>
+        <Text
+          style={{
+            textAlign: "center",
+            fontSize: 10,
+            marginTop: 4,
+            alignSelf: "center",
+          }}
+        >
+          {label}
+        </Text>
       </View>
     );
   }
@@ -110,6 +209,7 @@ export default function HomeScreen() {
                 textTransform: "uppercase",
                 fontWeight: "500",
                 letterSpacing: 1.1,
+                fontSize: 10,
               }}
             >
               {title}
@@ -124,13 +224,13 @@ export default function HomeScreen() {
               justifyContent: "flex-end",
             }}
             style={{ marginLeft: 8 }}
-            labelStyle={{ fontSize: 16, textAlign: "center" }}
+            labelStyle={{ fontSize: 12, textAlign: "center" }}
           >
-            <Text style={{ fontSize: 16 }}>View More</Text>
+            <Text style={{ fontSize: 12 }}>View More</Text>
             <EvilIcons
               name="arrow-right"
               color="#000"
-              size={22}
+              size={12}
               style={{ marginLeft: 4 }}
             />
           </Button>
@@ -151,6 +251,7 @@ export default function HomeScreen() {
                 key={idx}
                 source={images[item.path]}
                 label={item.name}
+                onPress={item.route ? () => router.push(item.route) : undefined}
               />
             ))}
           </View>
@@ -169,82 +270,18 @@ export default function HomeScreen() {
           source={require("@/assets/images/home-bg.png")}
           style={[styles.image, { opacity: fadeAnim }]}
         />
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginTop: 16,
-            display: "flex",
-            flexWrap: "wrap",
-            gap: 8,
-          }}
-        >
-          <Button
-            mode="contained"
-            onPress={() => console.log("Live Updates pressed!")}
-            contentStyle={{ flexDirection: "row", alignItems: "center" }}
-            icon={() => <EvilIcons name="bell" color="#fff" size={18} />}
-          >
-            Live Updates
-          </Button>
-          <Button
-            mode="contained"
-            onPress={() => console.log("Slotted Sarva Darshan pressed!")}
-            contentStyle={{ flexDirection: "row", alignItems: "center" }}
-            icon={() => <EvilIcons name="calendar" color="#fff" size={18} />}
-          >
-            Slotted Sarva Darshan
-          </Button>
-          <Button
-            mode="contained"
-            onPress={() => console.log("Today's Schedules pressed!")}
-            contentStyle={{ flexDirection: "row", alignItems: "center" }}
-            icon={() => <EvilIcons name="clock" color="#fff" size={18} />}
-          >
-            Today's Schedules
-          </Button>
-        </View>
+        <SomeComponent />
 
-        {/* Section: Types of Darshans */}
-        <SectionWithGrid
-          title="Types of Darshans"
-          items={images1.slice(0, 3)}
-          images={images}
-          onViewMore={() => {
-            console.log("Navigating to Darshans");
-            router.push("/darshans");
-          }}
-        />
-        {/* Section: Types of Sevas */}
-        <SectionWithGrid
-          title="Types of Sevas"
-          items={images1.slice(0, 6)}
-          images={images}
-          onViewMore={() => router.push("/darshans")}
-        />
-        <SectionWithGrid
-          title="Accomodation"
-          items={images1.slice(0, 2)}
-          images={images}
-          onViewMore={() => router.push("/darshans")}
-        />
-        <SectionWithGrid
-          title="Places"
-          items={images1.slice(0, 3)}
-          images={images}
-          onViewMore={() => router.push("/darshans")}
-        />
-        <SectionWithGrid
-          title="Hundi"
-          items={images1.slice(0, 2)}
-          images={images}
-          onViewMore={() => router.push("/darshans")}
-        />
-      </View>
-      <View>
-        <Button onPress={() => router.push("/darshans")}>
-          go to sevas okay
-        </Button>
+        {/* Render all sections dynamically */}
+        {sections.map((section, idx) => (
+          <SectionWithGrid
+            key={section.title}
+            title={section.title}
+            items={section.items}
+            images={images}
+            onViewMore={() => router.push(section.route)}
+          />
+        ))}
       </View>
     </ScrollView>
   );

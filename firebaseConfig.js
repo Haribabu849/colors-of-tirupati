@@ -1,7 +1,7 @@
 // firebaseConfig.js
 
-import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 
 // Your corrected Firebase config
 const firebaseConfig = {
@@ -20,4 +20,3 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export { db };
-
