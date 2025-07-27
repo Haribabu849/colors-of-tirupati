@@ -1,4 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
+import { router } from "expo-router";
 import React from "react";
 import { View } from "react-native";
 import { Button, Text } from "react-native-paper";
@@ -103,9 +104,7 @@ const SectionWithGrid = ({
               key={idx}
               source={images[item.path]}
               label={item.name}
-              onPress={
-                item.route ? () => onViewMore && onViewMore() : undefined
-              }
+              onPress={item.route ? () => router.push(item.route) : undefined}
             />
           ))}
         </View>

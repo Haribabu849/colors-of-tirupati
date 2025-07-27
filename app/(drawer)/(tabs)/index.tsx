@@ -26,7 +26,7 @@ let images1 = [
   {
     path: "calendar.png",
     name: "Special Darshan - 300rs",
-    route: "/special-darshan",
+    route: "/darshans",
   },
   {
     path: "senior-citizen.png",
@@ -56,7 +56,7 @@ const sections = [
   {
     title: "Types of Sevas",
     items: images1.slice(0, 6),
-    route: "/sevas",
+    route: "/darshans",
   },
   {
     title: "Accomodation",
