@@ -99,39 +99,22 @@ export default function HomeScreen() {
     onPress?: () => void;
   }) {
     return (
-      <View
-        style={{
-          width: "32%",
-          alignItems: "center",
-          justifyContent: "center",
-          marginBottom: 16,
-          alignSelf: "center",
-        }}
-      >
-        <Button
-          onPress={onPress}
-          style={{
-            padding: 0,
-            minWidth: 0,
-            minHeight: 0,
-            borderRadius: 8,
-            overflow: "hidden",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-          contentStyle={{
-            width: 60,
-            height: 60,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Animated.View
+      <View style={{ width: "32%", alignItems: "center", marginBottom: 16 }}>
+        <Animated.View style={{ width: 60, height: 60 }}>
+          <Button
+            onPress={onPress}
             style={{
+              padding: 0,
+              minWidth: 0,
+              minHeight: 0,
+              borderRadius: 8,
+              overflow: "hidden",
+            }}
+            contentStyle={{
               width: 60,
               height: 60,
-              alignItems: "center",
               justifyContent: "center",
+              alignItems: "center",
             }}
           >
             <Animated.Image
@@ -144,18 +127,9 @@ export default function HomeScreen() {
               }}
               resizeMode="cover"
             />
-          </Animated.View>
-        </Button>
-        <Text
-          style={{
-            textAlign: "center",
-            fontSize: 10,
-            marginTop: 4,
-            alignSelf: "center",
-          }}
-        >
-          {label}
-        </Text>
+          </Button>
+        </Animated.View>
+        <Text style={{ textAlign: "center", fontSize: 10 }}>{label}</Text>
       </View>
     );
   }
@@ -224,9 +198,9 @@ export default function HomeScreen() {
               justifyContent: "flex-end",
             }}
             style={{ marginLeft: 8 }}
-            labelStyle={{ fontSize: 12, textAlign: "center" }}
+            labelStyle={{ fontSize: 10, textAlign: "center" }}
           >
-            <Text style={{ fontSize: 12 }}>View More</Text>
+            <Text style={{ fontSize: 10 }}>View More</Text>
             <EvilIcons
               name="arrow-right"
               color="#000"
