@@ -9,7 +9,8 @@ import { Animated, ScrollView, StyleSheet, View } from "react-native";
 // Fix: add index signature for images object
 type ImagesMap = { [key: string]: any };
 const images: ImagesMap = {
-  "darshan-ticket.png": require("@/assets/images/special-darshan.png"),
+  "darshan-ticket.png": require("@/assets/images/darshan-ticket.png"),
+  "special-darshan.png": require("@/assets/images/special-darshan.png"),
   "senior-citizen.png": require("@/assets/images/senior-citizen.png"),
   "ssd-token.png": require("@/assets/images/ssd-token.png"),
   "electronic-hundi.png": require("@/assets/images/electronic-hundi.png"),
@@ -47,31 +48,117 @@ let images1 = [
   },
 ];
 
+const images2 = [
+  {
+    path: "special-darshan.png",
+    name: "Special Darshan - 300rs",
+    route: "/pilgrimFacilities/special-darshan",
+  },
+  {
+    path: "darshan-ticket.png",
+    name: "Special Darshan Tiruchanur",
+    route: "/pilgrimFacilities/special-darshan-tiruchanur",
+  },
+  {
+    path: "ssd-token.png",
+    name: "Slotted Sarva Darshan",
+    route: "/pilgrimFacilities/ssd-token",
+  },
+];
+
+const images3 = [
+  {
+    path: "arjitha-seva.png",
+    name: "Arjitha Seva",
+    route: "/pilgrimFacilities/arjitha-seva",
+  },
+  {
+    path: "virtual-seva.png",
+    name: "Virtual Seva",
+    route: "/pilgrimFacilities/virtual-seva",
+  },
+  {
+    path: "angapradakshanam.png",
+    name: "Angapradakshanam",
+    route: "/pilgrimFacilities/angapradakshanam",
+  },
+  {
+    path: "electronic-hundi.png",
+    name: "Electronic Hundi",
+    route: "/pilgrimFacilities/electronic-hundi",
+  },
+];
+
+const images4 = [
+  {
+    path: "kalyana-vedhika.png",
+    name: "Kalyana Vedhika",
+    route: "/pilgrimFacilities/kalyana-vedhika",
+  },
+  {
+    path: "kalyana-mandapam.png",
+    name: "Kalyana Mandapam",
+    route: "/pilgrimFacilities/kalyana-mandapam",
+  },
+  {
+    path: "srivani-trust.png",
+    name: "Srivani Trust Donations",
+    route: "/pilgrimFacilities/srivani-trust",
+  },
+  {
+    path: "diaries.png",
+    name: "Diaries/Calendars",
+    route: "/pilgrimFacilities/diaries-calendars",
+  },
+  {
+    path: "sapthagiri-magazine.png",
+    name: "Sapthagiri Magazine",
+    route: "/pilgrimFacilities/sapthagiri-magazine",
+  },
+];
+
+const images5 = [
+  {
+    path: "accomodation.png",
+    name: "Accomodation",
+    route: "/pilgrimFacilities/accomodation",
+  },
+  {
+    path: "swami-vari-hundi.png",
+    name: "Swamivari (E-Hundi)",
+    route: "/pilgrimFacilities/swami-vari-hundi",
+  },
+  {
+    path: "ammavari-hundi.png",
+    name: "Ammavari (E-Hundi)",
+    route: "/pilgrimFacilities/ammavari-hundi",
+  },
+];
 const sections = [
   {
     title: "Types of Darshans",
-    items: images1.slice(0, 3),
-    route: "/darshans",
+    items: images2,
+    route: "/Pilgrim Services",
   },
   {
     title: "Types of Sevas",
-    items: images1.slice(0, 6),
-    route: "/darshans",
+    items: images3,
+    route: "/Pilgrim Services",
   },
   {
-    title: "Accomodation",
-    items: images1.slice(0, 2),
-    route: "/accomodation",
+    title: "Services",
+    items: images4,
+    route: "/Pilgrim Services",
   },
   {
-    title: "Places",
-    items: images1.slice(0, 3),
-    route: "/places",
+    title: "Pilgrim Facilities",
+    items: images5,
+    route: "/Pilgrim Services",
   },
   {
     title: "Hundi",
     items: images1.slice(0, 2),
-    route: "/hundi",
+    route: "/Pilgrim Services",
   },
 ];
 
@@ -108,6 +195,7 @@ export default function HomeScreen() {
             images={images}
             onViewMore={() => router.push(section.route)}
             ImageWithLabel={ImageWithLabel}
+            showHeader={true}
           />
         ))}
       </View>

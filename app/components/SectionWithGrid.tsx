@@ -18,6 +18,7 @@ type SectionWithGridProps = {
   title: string;
   items: { path: string; name: string }[];
   images: ImagesMap;
+  showHeader?: boolean;
   onViewMore?: () => void;
   ImageWithLabel: React.ComponentType<{
     source: any;
@@ -32,62 +33,65 @@ const SectionWithGrid = ({
   images,
   onViewMore,
   ImageWithLabel,
+  showHeader,
 }: SectionWithGridProps) => {
   return (
     <>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginTop: 16,
-        }}
-      >
-        <LinearGradient
-          colors={["#3FADFB", "#007EE3"]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
+      {showHeader && (
+        <View
           style={{
-            padding: 16,
-            borderRadius: 8,
-            width: "60%",
-            borderColor: "black",
-            borderWidth: 0.8,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginTop: 16,
           }}
         >
-          <Text
+          <LinearGradient
+            colors={["#3FADFB", "#007EE3"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
             style={{
-              color: "white",
-              textAlign: "center",
-              textTransform: "uppercase",
-              fontWeight: "500",
-              letterSpacing: 1.1,
-              fontSize: 10,
+              padding: 16,
+              borderRadius: 8,
+              width: "60%",
+              borderColor: "black",
+              borderWidth: 0.8,
             }}
           >
-            {title}
-          </Text>
-        </LinearGradient>
-        <Button
-          mode="text"
-          onPress={onViewMore}
-          contentStyle={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "flex-end",
-            gap: 4,
-          }}
-          style={{ marginLeft: 8 }}
-          labelStyle={{
-            fontSize: 10,
-            textAlign: "center",
-            verticalAlign: "middle",
-            color: "",
-          }}
-        >
-          VIEW MORE
-        </Button>
-      </View>
+            <Text
+              style={{
+                color: "white",
+                textAlign: "center",
+                textTransform: "uppercase",
+                fontWeight: "500",
+                letterSpacing: 1.1,
+                fontSize: 10,
+              }}
+            >
+              {title}
+            </Text>
+          </LinearGradient>
+          <Button
+            mode="text"
+            onPress={onViewMore}
+            contentStyle={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "flex-end",
+              gap: 4,
+            }}
+            style={{ marginLeft: 8 }}
+            labelStyle={{
+              fontSize: 10,
+              textAlign: "center",
+              verticalAlign: "middle",
+              color: "",
+            }}
+          >
+            VIEW MORE
+          </Button>
+        </View>
+      )}
       {chunkArray(items, 3).map((row, rowIdx) => (
         <View
           key={rowIdx}
